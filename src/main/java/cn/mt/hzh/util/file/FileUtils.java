@@ -1,9 +1,35 @@
 package cn.mt.hzh.util.file;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+
+import cn.mt.hzh.util.logging.SimpleLog;
 
 public class FileUtils {
 
+
+	
+	public static boolean printContentToFile(String filePath,StringBuilder content){
+		try {
+			boolean append=false;
+			if(FileUtils.fileEixsts(filePath)){
+				append=true;
+			}
+			BufferedWriter	writer=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath,append)));
+			writer.append(content.toString());
+			writer.flush();
+			writer.close();
+			return true;
+		} catch (IOException e) {
+			SimpleLog.formatLog(e.getMessage());
+		}
+		return false;
+	}
 	/**
 	 * @param 路径
 	 * path值若null或不存在此文件返回false 否则 true
